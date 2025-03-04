@@ -1,0 +1,56 @@
+---
+title: "index"
+output: html_document
+---
+
+```{r}
+ # 4. Load the data set of your choice and get information about its structure (remember all code needs to be inside a knitr code chunk)
+
+library(tidyverse)
+library(ggplot2)
+
+data(package = "worldlanguages")
+
+library("worldlanguages")
+?n_languages_by_country
+
+view(n_languages_by_country)
+glimpse(n_languages_by_country)
+```
+
+```{r}
+ # 5. Tidy the data set (every variable gets a column, every observation occupies a single row), if necessary.
+
+ # data was already tidy:  9 columns or variables, 242 rows or obs. 
+
+ # 6. Calculate descriptive statistics of your choice.
+ 
+ # This function gives me the overall summary
+summary(n_languages_by_country)
+
+ # This is the mean for the total of languages spoken and the mean of the total speakers
+
+mean(n_languages_by_country$nol_total)
+mean(n_languages_by_country$nos_total)
+
+ # 7. Select two continuous variables and fit a model to the data (bivariate regression).
+ # My variables are nol_total, total count of languages spoken AND nos_total, number of total speakers
+
+cor(n_languages_by_country$nol_total, n_languages_by_country$nos_total)
+
+ # Check with the Pearson's product-moment correlation
+cor.test(n_languages_by_country$nol_total, n_languages_by_country$nos_total)
+
+ # 8. Generate a plot that includes a regression line.
+
+n_languages_by_country |>
+  ggplot() +
+  aes(x = nol_total, y = nos_total) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ # 9. Write up some general observations (1-2 paragraphs max)
+
+ # Observations: The data set n_languages_by_country contains information about the number of languages spoken in 242 countries. It is a large data set obtained from Wikipedia. Some of the variables consider are the total count of languages and the number of total speakers. Thanks to the model generated, we can see that the p-value of the correlation of those two variables is very small (1.412e-14), indicating that it is significant. This indicates that as one of the variables increases, the other one will as well. The same can be concluded after visualizing the plot with the regression line.
+```
+
